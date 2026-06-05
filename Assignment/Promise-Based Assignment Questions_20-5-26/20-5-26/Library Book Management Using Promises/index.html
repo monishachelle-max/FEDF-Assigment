@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Library Book Management</title>
+</head>
+<body>
+
+    <h2>Library Book Management Using Promises</h2>
+
+    <button onclick="displayBooks()">Display Books</button>
+    <button onclick="addBook()">Add Book</button>
+    <button onclick="updateBook()">Update Book</button>
+    <button onclick="deleteBook()">Delete Book</button>
+
+    <div id="result"></div>
+
+    <script>
+
+        const api = "https://jsonplaceholder.typicode.com/posts";
+
+        // Display Books
+        function displayBooks() {
+
+            fetch(api)
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                let books = "<h3>Book List</h3>";
+
+                const bookNames = [
+                    "Java Programming",
+                    "Python Basics",
+                    "Data Structures",
+                    "Web Development",
+                    "DBMS Concepts"
+                ];
+
+                data.slice(0,5).forEach((book, index) => {
+
+                    books += `
+                        <p>
+                            <b>Book Code:</b> B00${index + 1}<br>
+                            <b>Book Name:</b> ${bookNames[index]}
+                        </p>
+                        <hr>
+                    `;
+                });
+
+                document.getElementById("result").innerHTML = books;
+            })
+
+            .catch(error => {
+                console.log("Error:", error);
+            });
+        }
+
+        // Add Book
+        function addBook() {
+
+            fetch(api, {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    title: "JavaScript Basics",
+                    author: "Monisha"
+                })
+            })
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                document.getElementById("result").innerHTML =
+                    "<h3>Book Added Successfully</h3>" +
+                    "Book Name: JavaScript Basics";
+            })
+
+            .catch(error => {
+                console.log("Error:", error);
+            });
+        }
+
+        // Update Book
+        function updateBook() {
+
+            fetch(api + "/1", {
+
+                method: "PUT",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    title: "Advanced Java",
+                    author: "Updated Author"
+                })
+            })
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                document.getElementById("result").innerHTML =
+                    "<h3>Book Updated Successfully</h3>" +
+                    "Updated Book Name: Advanced Java";
+            })
+
+            .catch(error => {
+                console.log("Error:", error);
+            });
+        }
+
+        // Delete Book
+        function deleteBook() {
+
+            fetch(api + "/1", {
+
+                method: "DELETE"
+            })
+
+            .then(response => {
+
+                document.getElementById("result").innerHTML =
+                    "<h3>Book Deleted Successfully</h3>";
+            })
+
+            .catch(error => {
+                console.log("Error:", error);
+            });
+        }
+
+    </script>
+
+</body>
+</html>

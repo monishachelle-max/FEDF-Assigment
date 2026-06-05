@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Results</title>
+</head>
+<body>
+  <h2>Student Result Processing System</h2>
+  <button onclick="showResults()">Show Results</button>
+  <div id="output"></div>
+
+  <script>
+    // Use class to define Student
+    class Student {
+      constructor(name, sem1, sem2) {
+        this.name = name;
+        this.sem1 = sem1;
+        this.sem2 = sem2;
+      }
+      // Use arrow functions to calculate total and average
+      getTotal = () => {
+        // Use spread operator to combine marks
+        const all = [...this.sem1, ...this.sem2];
+        return all.reduce((sum, m) => sum + m, 0);
+      };
+      getAverage = () => {
+        const all = [...this.sem1, ...this.sem2];
+        return this.getTotal() / all.length;
+      };
+    }
+
+    // Create student records
+    const student1 = new Student("Monisha", [85, 90, 88], [92, 87, 91]);
+    const student2 = new Student("Rahul", [78, 82, 85], [88, 84, 86]);
+    const student3 = new Student("Priya", [95, 92, 94], [96, 93, 97]);
+
+    const showResults = () => {
+      let output = "";
+      const students = [student1, student2, student3];
+
+      students.forEach(student => {
+        // Use destructuring
+        const { name, sem1, sem2 } = student;
+        // Use template literals
+        output += `<div>
+          <h3>Name: ${name}</h3>
+          <p>Semester 1 Marks: ${sem1.join(", ")}</p>
+          <p>Semester 2 Marks: ${sem2.join(", ")}</p>
+          <p>Total Marks: ${student.getTotal()}</p>
+          <p>Average Marks: ${student.getAverage().toFixed(2)}</p>
+          <hr>
+        </div>`;
+      });
+
+      document.getElementById("output").innerHTML = output;
+    };
+  </script>
+</body>
+</html>

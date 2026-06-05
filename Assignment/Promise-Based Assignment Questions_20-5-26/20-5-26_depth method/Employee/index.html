@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Management System</title>
+
+  <style>
+
+    body {
+      font-family: Arial;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    button {
+      margin: 10px;
+      padding: 10px 15px;
+      background-color: blue;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    #output {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: white;
+      border: 1px solid gray;
+      white-space: pre-wrap;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<h1>Employee Management System Using Promises</h1>
+
+<button onclick="getEmployees()">GET Employee</button>
+<button onclick="addEmployee()">POST Employee</button>
+<button onclick="updateEmployee()">PUT Employee</button>
+<button onclick="deleteEmployee()">DELETE Employee</button>
+
+<div id="output">Output will appear here...</div>
+
+<script>
+
+const API_URL = "https://jsonplaceholder.typicode.com/users";
+
+const output = document.getElementById("output");
+
+
+// GET
+function getEmployees() {
+
+  fetch(API_URL)
+
+  .then(response => response.json())
+
+  .then(data => {
+
+    output.innerHTML =
+    "GET REQUEST SUCCESS\n\n" +
+    JSON.stringify(data, null, 2);
+
+  })
+
+  .catch(error => {
+
+    output.innerHTML =
+    "GET Error : " + error;
+
+  });
+
+}
+
+
+// POST
+function addEmployee() {
+
+  fetch(API_URL, {
+
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json"
+    },
+
+    body: JSON.stringify({
+
+      name: "Monisha",
+      department: "IT"
+
+    })
+
+  })
+
+  .then(response => response.json())
+
+  .then(data => {
+
+    output.innerHTML =
+    "POST REQUEST SUCCESS\n\n" +
+    JSON.stringify(data, null, 2);
+
+  })
+
+  .catch(error => {
+
+    output.innerHTML =
+    "POST Error : " + error;
+
+  });
+
+}
+
+
+// PUT
+function updateEmployee() {
+
+  fetch(`${API_URL}/1`, {
+
+    method: "PUT",
+
+    headers: {
+      "Content-Type": "application/json"
+    },
+
+    body: JSON.stringify({
+
+      id: 1,
+      name: "Updated Employee",
+      department: "HR"
+
+    })
+
+  })
+
+  .then(response => response.json())
+
+  .then(data => {
+
+    output.innerHTML =
+    "PUT REQUEST SUCCESS\n\n" +
+    JSON.stringify(data, null, 2);
+
+  })
+
+  .catch(error => {
+
+    output.innerHTML =
+    "PUT Error : " + error;
+
+  });
+
+}
+
+
+// DELETE
+function deleteEmployee() {
+
+  fetch(`${API_URL}/1`, {
+
+    method: "DELETE"
+
+  })
+
+  .then(response => {
+
+    if(response.ok) {
+
+      output.innerHTML =
+      "DELETE REQUEST SUCCESS\n\nEmployee deleted successfully.";
+
+    }
+
+  })
+
+  .catch(error => {
+
+    output.innerHTML =
+    "DELETE Error : " + error;
+
+  });
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Management System</title>
+</head>
+<body>
+
+    <h2>Employee Management System</h2>
+
+    <button onclick="getEmployees()">Get Employees</button>
+    <button onclick="addEmployee()">Add Employee</button>
+    <button onclick="updateEmployee()">Update Employee</button>
+    <button onclick="deleteEmployee()">Delete Employee</button>
+
+    <div id="output"></div>
+
+    <script>
+
+        const api = "https://jsonplaceholder.typicode.com/users";
+
+        // GET
+        function getEmployees() {
+            fetch(api)
+            .then(response => response.json())
+            .then(data => {
+                let result = "<h3>Employee List</h3>";
+
+                data.forEach(emp => {
+                    result += `
+                        <p>
+                            ID: ${emp.id} <br>
+                            Name: ${emp.name} <br>
+                            Email: ${emp.email}
+                        </p>
+                        <hr>
+                    `;
+                });
+
+                document.getElementById("output").innerHTML = result;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        }
+
+        // POST
+        function addEmployee() {
+            fetch(api, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: "Monisha",
+                    email: "monisha@gmail.com"
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("output").innerHTML =
+                    "Employee Added Successfully<br>" +
+                    JSON.stringify(data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        }
+
+        // PUT
+        function updateEmployee() {
+            fetch(api + "/1", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: "Updated Employee",
+                    email: "updated@gmail.com"
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("output").innerHTML =
+                    "Employee Updated Successfully<br>" +
+                    JSON.stringify(data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        }
+
+        // DELETE
+        function deleteEmployee() {
+            fetch(api + "/1", {
+                method: "DELETE"
+            })
+            .then(response => {
+                document.getElementById("output").innerHTML =
+                    "Employee Deleted Successfully";
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        }
+
+    </script>
+
+</body>
+</html>

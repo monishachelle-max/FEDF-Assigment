@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Course Registration System</title>
+</head>
+<body>
+
+    <h2>Student Course Registration System Using Async/Await</h2>
+
+    <button onclick="viewCourses()">View Courses</button>
+    <button onclick="registerStudent()">Register Student</button>
+    <button onclick="updateRegistration()">Update Registration</button>
+    <button onclick="cancelRegistration()">Cancel Registration</button>
+
+    <div id="message"></div>
+
+    <script>
+
+        const api = "https://jsonplaceholder.typicode.com/posts";
+
+        // View Courses
+        async function viewCourses() {
+
+            try {
+
+                const response = await fetch(api);
+
+                const data = await response.json();
+
+                let courses = "<h3>Available Courses</h3>";
+
+                const courseNames = [
+                    "Java Programming",
+                    "Python Programming",
+                    "Web Development",
+                    "Data Structures",
+                    "DBMS"
+                ];
+
+                data.slice(0,5).forEach((course, index) => {
+
+                    courses += `
+                        <p>
+                            <b>Course Code:</b> C00${index + 1}<br>
+                            <b>Course Name:</b> ${courseNames[index]}
+                        </p>
+                        <hr>
+                    `;
+                });
+
+                document.getElementById("message").innerHTML = courses;
+
+            }
+
+            catch(error) {
+
+                document.getElementById("message").innerHTML =
+                    "Error Fetching Courses";
+            }
+        }
+
+        // Register Student
+        async function registerStudent() {
+
+            try {
+
+                const response = await fetch(api, {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        studentName: "Monisha",
+                        course: "Java Programming"
+                    })
+                });
+
+                const data = await response.json();
+
+                document.getElementById("message").innerHTML =
+                    "<h3>Student Registered Successfully</h3>" +
+                    "Student Name: Monisha<br>" +
+                    "Course: Java Programming";
+
+            }
+
+            catch(error) {
+
+                document.getElementById("message").innerHTML =
+                    "Registration Failed";
+            }
+        }
+
+        // Update Registration
+        async function updateRegistration() {
+
+            try {
+
+                const response = await fetch(api + "/1", {
+
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        studentName: "Updated Monisha",
+                        course: "Web Development"
+                    })
+                });
+
+                const data = await response.json();
+
+                document.getElementById("message").innerHTML =
+                    "<h3>Registration Updated Successfully</h3>" +
+                    "Updated Course: Web Development";
+
+            }
+
+            catch(error) {
+
+                document.getElementById("message").innerHTML =
+                    "Update Failed";
+            }
+        }
+
+        // Cancel Registration
+        async function cancelRegistration() {
+
+            try {
+
+                await fetch(api + "/1", {
+
+                    method: "DELETE"
+                });
+
+                document.getElementById("message").innerHTML =
+                    "<h3>Course Registration Cancelled Successfully</h3>";
+
+            }
+
+            catch(error) {
+
+                document.getElementById("message").innerHTML =
+                    "Cancellation Failed";
+            }
+        }
+
+    </script>
+
+</body>
+</html>

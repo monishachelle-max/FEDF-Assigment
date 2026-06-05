@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Inventory System</title>
+</head>
+<body>
+
+    <h2>Product Inventory System Using Async/Await</h2>
+
+    <button onclick="fetchProducts()">Fetch Products</button>
+    <button onclick="addProduct()">Add Product</button>
+    <button onclick="updateProduct()">Update Product</button>
+    <button onclick="deleteProduct()">Delete Product</button>
+
+    <div id="output"></div>
+
+    <script>
+
+        const api = "https://jsonplaceholder.typicode.com/posts";
+
+        // Fetch Products
+        async function fetchProducts() {
+
+            try {
+
+                const response = await fetch(api);
+
+                const data = await response.json();
+
+                let products = "<h3>Product List</h3>";
+
+                const productNames = [
+                    "Dell Laptop",
+                    "HP Laptop",
+                    "Samsung Mobile",
+                    "Boat Earphones",
+                    "Lenovo Tablet"
+                ];
+
+                data.slice(0,5).forEach((product, index) => {
+
+                    products += `
+                        <p>
+                            <b>Product Code:</b> P00${index + 1}<br>
+                            <b>Product Name:</b> ${productNames[index]}
+                        </p>
+                        <hr>
+                    `;
+                });
+
+                document.getElementById("output").innerHTML = products;
+
+            }
+
+            catch(error) {
+
+                console.log("Error:", error);
+            }
+        }
+
+        // Add Product
+        async function addProduct() {
+
+            try {
+
+                const response = await fetch(api, {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        title: "Asus Laptop",
+                        brand: "ASUS"
+                    })
+                });
+
+                const data = await response.json();
+
+                document.getElementById("output").innerHTML =
+                    "<h3>Product Added Successfully</h3>" +
+                    "Product Name: Asus Laptop";
+
+            }
+
+            catch(error) {
+
+                console.log("Error:", error);
+            }
+        }
+
+        // Update Product
+        async function updateProduct() {
+
+            try {
+
+                const response = await fetch(api + "/1", {
+
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        title: "Updated Dell Laptop",
+                        brand: "Dell"
+                    })
+                });
+
+                const data = await response.json();
+
+                document.getElementById("output").innerHTML =
+                    "<h3>Product Updated Successfully</h3>" +
+                    "Updated Product: Dell Laptop";
+
+            }
+
+            catch(error) {
+
+                console.log("Error:", error);
+            }
+        }
+
+        // Delete Product
+        async function deleteProduct() {
+
+            try {
+
+                await fetch(api + "/1", {
+
+                    method: "DELETE"
+                });
+
+                document.getElementById("output").innerHTML =
+                    "<h3>Product Deleted Successfully</h3>";
+
+            }
+
+            catch(error) {
+
+                console.log("Error:", error);
+            }
+        }
+
+    </script>
+
+</body>
+</html>

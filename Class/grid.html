@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+    <style>
+        body {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .parent {
+            height: 100vh;
+            display: grid;
+            grid-template-rows: 10% 80% 10%;
+            grid-template-columns: 15% 70% 15%;
+
+        }
+
+        .header {
+            background-color: lightcoral;
+            grid-column: 1/4;
+            grid-row: 1/2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: greenyellow;
+        }
+
+        .leftmenu {
+            background-color: lightyellow;
+            grid-column: 1/2;
+            grid-row: 2/3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: lightpink;
+        }
+
+        .main {
+            background-color: lightgray;
+            grid-column: 2/3;
+            grid-row: 2/3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: lightseagreen;
+        }
+
+        .rightmenu {
+            background-color: lightblue;
+            grid-column: 3/4;
+            grid-row: 2/3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: yellow;
+        }
+
+        .footer {
+            background-color: lightgreen;
+            grid-column: 1/4;
+            grid-row: 3/4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: lightgoldenrodyellow;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent">
+        <div class="header">
+            <h1>KLU</h1>
+        </div>
+        <div class="leftmenu">
+            <h1>Left Menu</h1>
+        </div>
+        <div class="main">
+            <h1>Main</h1>
+        </div>
+        <div class="rightmenu">
+            <h1>Right Menu</h1>
+        </div>
+        <div class="footer">
+            <h1>Footer</h1>
+        </div>
+    </div>
+</body>
+
+</html>

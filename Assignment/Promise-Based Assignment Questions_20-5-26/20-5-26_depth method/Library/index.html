@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Book Management</title>
+
+  <style>
+
+    body {
+      font-family: Arial;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    button {
+      margin: 10px;
+      padding: 10px 15px;
+      background-color: green;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    #output {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: white;
+      border: 1px solid gray;
+      white-space: pre-wrap;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<h1>Library Book Management Using Promises</h1>
+
+<button onclick="getBooks()">Display Books</button>
+<button onclick="addBook()">Add Book</button>
+<button onclick="updateBook()">Update Book</button>
+<button onclick="deleteBook()">Delete Book</button>
+
+<div id="output">Output will appear here...</div>
+
+<script>
+
+const API_URL = "https://jsonplaceholder.typicode.com/posts";
+
+const output = document.getElementById("output");
+
+
+// GET
+function getBooks() {
+
+  fetch(API_URL)
+
+  .then(response => response.json())
+
+  .then(data => {
+
+    output.innerHTML =
+    "GET REQUEST SUCCESS\n\n" +
+    JSON.stringify(data, null, 2);
+
+  })
+
+  .catch(error => {
+
+    output.innerHTML =
+    "GET Error : " + error;
+
+  });
+
+}
+
+
+// POST
+function addBook() {
+
+  fetch(API_URL, {
+
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json"
+    },
+
+    body: JSON.stringify({
+
+      title: "JavaScript Basics",
+      author: "ABC"
+
+    })
+
+  })
+
+  .then(response => response.json())
+
+  .then(data => {
+
+    output.innerHTML =
+    "POST REQUEST SUCCESS\n\n" +
+    JSON.stringify(data, null, 2);
+
+  })
+
+  .catch(error => {
+
+    output.innerHTML =
+    "POST Error : " + error;
+
+  });
+
+}
+
+
+// PUT
+function updateBook() {
+
+  fetch(`${API_URL}/1`, {
+
+    method: "PUT",
+
+    headers: {
+      "Content-Type": "application/json"
+    },
+
+    body: JSON.stringify({
+
+      id: 1,
+      title: "Updated Book",
+      author: "XYZ"
+
+    })
+
+  })
+
+  .then(response => response.json())
+
+  .then(data => {
+
+    output.innerHTML =
+    "PUT REQUEST SUCCESS\n\n" +
+    JSON.stringify(data, null, 2);
+
+  })
+
+  .catch(error => {
+
+    output.innerHTML =
+    "PUT Error : " + error;
+
+  });
+
+}
+
+
+// DELETE
+function deleteBook() {
+
+  fetch(`${API_URL}/1`, {
+
+    method: "DELETE"
+
+  })
+
+  .then(response => {
+
+    if(response.ok) {
+
+      output.innerHTML =
+      "DELETE REQUEST SUCCESS\n\nBook deleted successfully.";
+
+    }
+
+  })
+
+  .catch(error => {
+
+    output.innerHTML =
+    "DELETE Error : " + error;
+
+  });
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!--<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Records</title>
+</head>
+<body>
+
+<h2>Student List</h2>
+<ul id="studentList"></ul>
+
+<button onclick="updateDirectDOM()">Update using Direct DOM</button>
+<button onclick="updateVirtualDOM()">Update using Virtual DOM</button>
+
+<script>
+  // Initial student array
+  let students = [
+    "Asha", "Ravi", "Kiran", "Sneha", "Arjun",
+    "Divya", "Rahul", "Meena", "Vijay", "Pooja"
+  ];
+
+  // Render function (used initially)
+  function renderList() {
+    const ul = document.getElementById("studentList");
+    ul.innerHTML = "";
+
+    students.forEach((name, index) => {
+      let li = document.createElement("li");
+      li.id = "student-" + index;
+      li.textContent = name;
+      ul.appendChild(li);
+    });
+  }
+
+  // Initial render
+  renderList();
+
+  // 🔴 Direct DOM Approach (re-render everything)
+  function updateDirectDOM() {
+    students[2] = "Updated Kiran";
+    students[5] = "Updated Divya";
+
+    renderList(); // Re-renders entire list
+  }
+
+  // 🟢 Virtual DOM Style (update only changed items)
+  function updateVirtualDOM() {
+    students[2] = "Virtual Kiran";
+    students[5] = "Virtual Divya";
+
+    // Update only specific elements
+    document.getElementById("student-2").textContent = students[2];
+    document.getElementById("student-5").textContent = students[5];
+  }
+</script>
+
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student List - DOM vs Virtual DOM</title>
+</head>
+<body>
+
+<h2>Student Records</h2>
+
+<ul id="studentList"></ul>
+
+<button onclick="updateDirectDOM()">Update using Direct DOM</button>
+<button onclick="updateVirtualDOM()">Update using Virtual DOM</button>
+
+<script>
+  // Initial student data (with Sirisha)
+  let students = [
+    "Sirisha", "Rahul", "Sneha", "Priya", "Kiran",
+    "Anjali", "Ravi", "Meena", "Vikas", "Neha"
+  ];
+
+  // Copy for virtual DOM comparison
+  let oldStudents = [...students];
+
+  const list = document.getElementById("studentList");
+
+  // Initial render
+  function renderList(data) {
+    list.innerHTML = "";
+
+  data.forEach((student, index) => {
+    console.log("Rendering student:", student); // 👈 LOG
+
+    const li = document.createElement("li");
+    li.textContent = student;
+    list.appendChild(li);
+  });
+  }
+
+  renderList(students);
+
+  // -------------------------------
+  // 1. Direct DOM Update
+  // -------------------------------
+  function updateDirectDOM() {
+    students[0] = "Sirisha Updated";
+    students[3] = "Priya Updated";
+
+    console.log("Direct DOM: Re-rendering entire list");
+
+    renderList(students); // full re-render
+  }
+
+  // -------------------------------
+  // 2. Virtual DOM (Manual Diff)
+  // -------------------------------
+  function updateVirtualDOM() {
+    let newStudents = [...students];
+
+    newStudents[0] = "Sirisha Virtual";
+    newStudents[3] = "Priya Virtual";
+
+    console.log("Virtual DOM: Updating only changed elements");
+
+    const items = list.children;
+
+    newStudents.forEach((student, index) => {
+      if (student !== oldStudents[index]) {
+        items[index].textContent = student; // update only changed item
+      }
+    });
+
+    // update references
+    oldStudents = [...newStudents];
+    students = [...newStudents];
+  }
+</script>
+
+</body>
+</html>
+

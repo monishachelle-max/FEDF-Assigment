@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Library Book Management</title>
+</head>
+<body>
+  <h2>Library Book Management System</h2>
+  <button onclick="showBooks()">Show Books</button>
+  <div id="output"></div>
+
+  <script>
+    // Use class to define Book
+    class Book {
+      // Use rest operator to store multiple prices
+      constructor(title, author, price, ...extras) {
+        this.title = title;
+        this.author = author;
+        this.price = price;
+        this.extras = extras;
+      }
+      // Use arrow function to calculate final price
+      calculateFinal = () => {
+        const total = this.extras.reduce((sum, val) => sum + val, 0);
+        return this.price + total;
+      };
+    }
+
+    // Create multiple book objects
+    const book1 = new Book("The Great Gatsby", "Fitzgerald", 500, 50, 30);
+    const book2 = new Book("1984", "Orwell", 400, 60, 20);
+    const book3 = new Book("Mockingbird", "Lee", 600, 100, 50);
+
+    const showBooks = () => {
+      let output = "";
+      const books = [book1, book2, book3];
+
+      books.forEach(book => {
+        // Use destructuring
+        const { title, author, price, extras } = book;
+        // Use template literals
+        output += `<div>
+          <h3>${title}</h3>
+          <p>Author: ${author}</p>
+          <p>Base Price: ${price}</p>
+          <p>Extras: ${extras.join(", ")}</p>
+          <p>Final Price: ${book.calculateFinal()}</p>
+          <hr>
+        </div>`;
+      });
+
+      document.getElementById("output").innerHTML = output;
+    };
+  </script>
+</body>
+</html>

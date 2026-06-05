@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Registration System</title>
+
+  <style>
+
+    body {
+      font-family: Arial;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    button {
+      margin: 10px;
+      padding: 10px 15px;
+      background-color: orange;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    #output {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: white;
+      border: 1px solid gray;
+      white-space: pre-wrap;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<h1>Student Course Registration System Using Async/Await</h1>
+
+<button onclick="viewCourses()">View Courses</button>
+<button onclick="registerStudent()">Register Student</button>
+<button onclick="updateRegistration()">Update Registration</button>
+<button onclick="cancelRegistration()">Cancel Registration</button>
+
+<div id="output">Output will appear here...</div>
+
+<script>
+
+const API_URL = "https://jsonplaceholder.typicode.com/posts";
+
+const output = document.getElementById("output");
+
+
+// GET
+async function viewCourses() {
+
+  try {
+
+    const response = await fetch(API_URL);
+
+    const data = await response.json();
+
+    output.innerHTML =
+    "GET REQUEST SUCCESS\n\n" +
+    JSON.stringify(data, null, 2);
+
+  }
+
+  catch(error) {
+
+    output.innerHTML =
+    "GET Error : " + error;
+
+  }
+
+}
+
+
+// POST
+async function registerStudent() {
+
+  try {
+
+    const response = await fetch(API_URL, {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+
+        student: "Monisha",
+        course: "JavaScript"
+
+      })
+
+    });
+
+    const data = await response.json();
+
+    output.innerHTML =
+    "POST REQUEST SUCCESS\n\n" +
+    JSON.stringify(data, null, 2);
+
+  }
+
+  catch(error) {
+
+    output.innerHTML =
+    "POST Error : " + error;
+
+  }
+
+}
+
+
+// PUT
+async function updateRegistration() {
+
+  try {
+
+    const response = await fetch(`${API_URL}/1`, {
+
+      method: "PUT",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+
+        id: 1,
+        course: "React JS"
+
+      })
+
+    });
+
+    const data = await response.json();
+
+    output.innerHTML =
+    "PUT REQUEST SUCCESS\n\n" +
+    JSON.stringify(data, null, 2);
+
+  }
+
+  catch(error) {
+
+    output.innerHTML =
+    "PUT Error : " + error;
+
+  }
+
+}
+
+
+// DELETE
+async function cancelRegistration() {
+
+  try {
+
+    const response = await fetch(`${API_URL}/1`, {
+
+      method: "DELETE"
+
+    });
+
+    if(response.ok) {
+
+      output.innerHTML =
+      "DELETE REQUEST SUCCESS\n\nRegistration cancelled successfully.";
+
+    }
+
+  }
+
+  catch(error) {
+
+    output.innerHTML =
+    "DELETE Error : " + error;
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>

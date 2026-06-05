@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+    <style>
+        .parent {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .common {
+            color: yellow;
+            border: 1px solid gray;
+            margin: 20px;
+            padding: 20px;
+        }
+
+        .div1 {
+            background-color: green;
+            order: 10;
+        }
+
+        .div2 {
+            background-color: blue;
+            order: 9;
+            flex-basis: 20vw;
+        }
+
+        .div3 {
+            background-color: red;
+            order: 11;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent">
+        <div class="common div1"> Item1</div>
+        <div class="common div2"> Item2</div>
+        <div class="common div3"> Item3</div>
+    </div>
+</body>
+
+</html>

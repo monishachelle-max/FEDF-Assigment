@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Inventory System</title>
+
+  <style>
+
+    body {
+      font-family: Arial;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    button {
+      margin: 10px;
+      padding: 10px 15px;
+      background-color: purple;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    #output {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: white;
+      border: 1px solid gray;
+      white-space: pre-wrap;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<h1>Product Inventory System Using Async/Await</h1>
+
+<button onclick="getProducts()">Fetch Products</button>
+<button onclick="addProduct()">Add Product</button>
+<button onclick="updateProduct()">Update Product</button>
+<button onclick="deleteProduct()">Delete Product</button>
+
+<div id="output">Output will appear here...</div>
+
+<script>
+
+const API_URL = "https://jsonplaceholder.typicode.com/posts";
+
+const output = document.getElementById("output");
+
+
+// GET
+async function getProducts() {
+
+  try {
+
+    const response = await fetch(API_URL);
+
+    const data = await response.json();
+
+    output.innerHTML =
+    "GET REQUEST SUCCESS\n\n" +
+    JSON.stringify(data, null, 2);
+
+  }
+
+  catch(error) {
+
+    output.innerHTML =
+    "GET Error : " + error;
+
+  }
+
+}
+
+
+// POST
+async function addProduct() {
+
+  try {
+
+    const response = await fetch(API_URL, {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+
+        product: "Laptop",
+        price: 50000
+
+      })
+
+    });
+
+    const data = await response.json();
+
+    output.innerHTML =
+    "POST REQUEST SUCCESS\n\n" +
+    JSON.stringify(data, null, 2);
+
+  }
+
+  catch(error) {
+
+    output.innerHTML =
+    "POST Error : " + error;
+
+  }
+
+}
+
+
+// PUT
+async function updateProduct() {
+
+  try {
+
+    const response = await fetch(`${API_URL}/1`, {
+
+      method: "PUT",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+
+        id: 1,
+        product: "Updated Laptop",
+        price: 60000
+
+      })
+
+    });
+
+    const data = await response.json();
+
+    output.innerHTML =
+    "PUT REQUEST SUCCESS\n\n" +
+    JSON.stringify(data, null, 2);
+
+  }
+
+  catch(error) {
+
+    output.innerHTML =
+    "PUT Error : " + error;
+
+  }
+
+}
+
+
+// DELETE
+async function deleteProduct() {
+
+  try {
+
+    const response = await fetch(`${API_URL}/1`, {
+
+      method: "DELETE"
+
+    });
+
+    if(response.ok) {
+
+      output.innerHTML =
+      "DELETE REQUEST SUCCESS\n\nProduct deleted successfully.";
+
+    }
+
+  }
+
+  catch(error) {
+
+    output.innerHTML =
+    "DELETE Error : " + error;
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
